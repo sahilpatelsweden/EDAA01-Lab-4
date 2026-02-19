@@ -18,8 +18,20 @@ public class FifoQueue<E> extends AbstractQueue<E> {
 	 * @return	true if it was possible to add the element 
 	 * 			to this queue, else false
 	 */
+
+	// Handle insertion when the queue is empty (circular self-reference) //
 	public boolean offer(E e) {
-		return false;
+		QueueNode<E> newNode = new QueueNode<E>(e);
+		if (last == null) {
+			last = newNode;
+			last.next = last;         // Circular reference for the single node
+		} else {
+			newNode.next = last.next;    // Point new node to the current head
+			last.next = newNode;         // Link the current last node to the new node
+			last = newNode;              // Update last to the new node
+		}
+		size++;             // Increment size after successful insertion
+		return true;        // Indicate that the element was successfully added
 	}
 	
 	/**	
@@ -27,7 +39,7 @@ public class FifoQueue<E> extends AbstractQueue<E> {
 	 * @return the number of elements in this queue
 	 */
 	public int size() {		
-		return 0;
+		return size; // return the current number of elements stored in the queue
 	}
 	
 	/**	
@@ -36,8 +48,13 @@ public class FifoQueue<E> extends AbstractQueue<E> {
 	 * @return 	the head element of this queue, or null 
 	 * 			if this queue is empty
 	 */
+
+	// Return the first element without removing it
 	public E peek() {
-		return null;
+		if (last == null) {
+			return null;
+		}
+		return last.next.element;
 	}
 
 	/**	
@@ -46,8 +63,23 @@ public class FifoQueue<E> extends AbstractQueue<E> {
 	 * post:	the head of the queue is removed if it was not empty
 	 * @return 	the head of this queue, or null if the queue is empty 
 	 */
+
+	// Remove and return the first element while maintaining circular structure //
 	public E poll() {
-		return null;
+		if (last == null) {
+        	return null;
+    	}
+
+    	QueueNode<E> first = last.next;
+
+    	if (first == last) {
+        	last = null;
+    	} else {
+        	last.next = first.next;
+    	}
+
+    	size--;
+    	return first.element;
 	}
 	
 	/**	
