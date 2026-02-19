@@ -86,10 +86,40 @@ public class FifoQueue<E> extends AbstractQueue<E> {
 	 * Returns an iterator over the elements in this queue
 	 * @return an iterator over the elements in this queue
 	 */	
+
+	// Return iterator over queue elements
 	public Iterator<E> iterator() {
-		return null;
+		return new QueueIterator();
 	}
-	
+
+	// Iterator implementation for circular queue
+	private class QueueIterator implements Iterator<E> {
+
+    	private QueueNode<E> current;
+    	private int count;
+
+ 		private QueueIterator() {
+        	current = (last == null) ? null : last.next;
+        	count = 0;
+    	}
+
+    	public boolean hasNext() {
+        	return count < size;
+    	}
+
+    	public E next() {
+        	if (!hasNext()) {
+            	throw new NoSuchElementException();
+        	}
+
+        	E element = current.element;
+        	current = current.next;
+        	count++;
+        	return element;
+    	}
+	}
+
+	// Node class for circular singly linked structure
 	private static class QueueNode<E> {
 		E element;
 		QueueNode<E> next;
