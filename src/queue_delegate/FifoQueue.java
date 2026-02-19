@@ -17,7 +17,7 @@ public class FifoQueue<E> extends AbstractQueue<E> {
 	 * 			to this queue, else false
 	 */
 	public boolean offer(E e) {
-		return false;
+		return list.offer(e);    // // Use the internal LinkedList to add the element to the rear //
 	}
 
 	/**	
@@ -25,7 +25,7 @@ public class FifoQueue<E> extends AbstractQueue<E> {
 	 * @return the number of elements in this queue
 	 */
 	public int size() {		
-		return 0;
+		return list.size();      // Delegate size calculation to the internal LinkedList //
 	}
 	
 	/**	
@@ -35,7 +35,8 @@ public class FifoQueue<E> extends AbstractQueue<E> {
 	 * 			if this queue is empty
 	 */
 	public E peek() {
-		return null;
+		return list.peek();   // Use the internal LinkedList to get the first element without removing it //
+
 	}
 
 	/**	
@@ -45,7 +46,7 @@ public class FifoQueue<E> extends AbstractQueue<E> {
 	 * @return 	the head of this queue, or null if the queue is empty 
 	 */
 	public E poll() {
-		return null;
+		return list.poll();
 	}
 
 	/**	
@@ -53,7 +54,7 @@ public class FifoQueue<E> extends AbstractQueue<E> {
 	 * @return an iterator over the elements in this queue
 	 */	
 	public Iterator<E> iterator() {
-		return null;
+		return list.iterator();       // Use the internal LinkedList to return an iterator over the elements //
 	}
 
 }
