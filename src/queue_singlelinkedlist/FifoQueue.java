@@ -119,6 +119,37 @@ public class FifoQueue<E> extends AbstractQueue<E> {
     	}
 	}
 
+	// Final append implementation //
+	public void append(FifoQueue<E> q) {
+
+        if (this == q) {
+            throw new IllegalArgumentException();
+        }
+
+        if (q.last == null) {
+            return; // nothing to append
+        }
+
+        if (this.last == null) {
+            // take over q completely
+            this.last = q.last;
+            this.size = q.size;
+        } else {
+
+            QueueNode<E> thisFirst = this.last.next;
+            QueueNode<E> qFirst = q.last.next;
+
+            this.last.next = qFirst;
+            q.last.next = thisFirst;
+
+            this.last = q.last;
+            this.size += q.size;
+        }
+
+        q.last = null;
+        q.size = 0;
+    }
+
 	// Node class for circular singly linked structure
 	private static class QueueNode<E> {
 		E element;
