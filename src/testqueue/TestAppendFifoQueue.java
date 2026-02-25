@@ -6,7 +6,7 @@ import queue_singlelinkedlist.FifoQueue;
 
 public class TestAppendFifoQueue {
     
-    // ADD Comment //
+    // Append two empty queues, both remain empty
     @Test
     void testAppendTwoEmptyQueues() {
         FifoQueue<Integer> q1 = new FifoQueue<>();
@@ -18,7 +18,7 @@ public class TestAppendFifoQueue {
         assertEquals(0, q2.size());
     }
 
-    // ADD Comment //
+    // Append non-empty to empty, elements move and source becomes empty
     @Test
     void testAppendEmptyToNonEmpty() {
         FifoQueue<Integer> q1 = new FifoQueue<>();

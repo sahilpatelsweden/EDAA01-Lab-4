@@ -5,6 +5,7 @@ public class FifoQueue<E> extends AbstractQueue<E> {
 	private QueueNode<E> last;
 	private int size;
 
+	// Create an empty queue with no nodes and size 0
 	public FifoQueue() {
 		super();
 		last = null;
@@ -98,15 +99,17 @@ public class FifoQueue<E> extends AbstractQueue<E> {
     	private QueueNode<E> current;
     	private int count;
 
+		// Starts iteration at 0
  		private QueueIterator() {
         	current = (last == null) ? null : last.next;
         	count = 0;
     	}
-
+		
+		// Check if there are more elemnts to iterate over
     	public boolean hasNext() {
         	return count < size;
     	}
-
+		// Return the next element and move to the next node, while counting iterations	
     	public E next() {
         	if (!hasNext()) {
             	throw new NoSuchElementException();
